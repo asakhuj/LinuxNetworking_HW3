@@ -24,21 +24,18 @@ for domain_id in domains:
     tree = ET.parse(fileName)
     root = tree.getroot()
     for mac in root.iter('mac'):
-           print(this_vm.name())
            vm_name = this_vm.name()
            list = mac.attrib
-           print(mac.attrib)
            macAddress= list['address']
-           print("****")
+           print(vm_name +" : "+ macAddress)
+           print("----------------------------------------------")
            if macAddress in hashMap:
-                print "********Duplicate found********* "+macAddress
+                print "WARNING ********Duplicate found********* "+macAddress
                 randomNumber = random.randint(1,9)
                 macAddress= macAddress[:16]+str(randomNumber)
                 print("Updated mac address " +str(macAddress))
                 mac.set('address',macAddress)
-                tree.write(fileName)
+                tree.write(fileName) #Updating the XML with the new MAC address, define the file again
                 #iface = conn.interfaceDefineXML(this_vm.XMLDesc(0), 0)
            hashMap[macAddress]=1
-
-
-print(hashMap)
+print("~~~~~~END~~~~~~~")
